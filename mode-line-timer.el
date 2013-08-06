@@ -1,4 +1,4 @@
-;;; simple-timer.el --- Simple timer
+;;; mode-line-timer.el --- Timer in mode-line
 
 ;; Author: Syohei Yoshida(syohex@gmail.com)
 ;; Version: 0.01
@@ -18,92 +18,92 @@
 (eval-when-compile
   (require 'cl))
 
-(defgroup simple-timer nil
+(defgroup mode-line-timer nil
   "Simple timer"
-  :prefix "simple-timer-"
+  :prefix "mode-line-timer-"
   :group 'timer)
 
-(defcustom simple-timer-mode-line-sign "●"
+(defcustom mode-line-timer-mode-line-sign "●"
   "Sign of timer"
   :type 'string
-  :group 'simple-timer)
+  :group 'mode-line-timer)
 
-(defface simple-timer-sign
+(defface mode-line-timer-sign
   '((t (:foreground "blue")))
   "mode-line-face"
-  :group 'simple-timer)
+  :group 'mode-line-timer)
 
-(defface simple-timer-timer
+(defface mode-line-timer-timer
   '((t (:weight bold)))
   "mode-line-face"
-  :group 'simple-timer)
+  :group 'mode-line-timer)
 
-(defvar simple-timer--timer nil)
-(defvar simple-timer--remainder-seconds 0)
-(defvar simple-timer--mode-line "")
+(defvar mode-line-timer--timer nil)
+(defvar mode-line-timer--remainder-seconds 0)
+(defvar mode-line-timer--mode-line "")
 
-(defmacro simple-timer--reset-remainder-time (time)
+(defmacro mode-line-timer--reset-remainder-time (time)
   `(setq simpler-timer--remainder-seconds (* ,time 60)))
 
-(defsubst simple-timer--time-to-string (seconds)
+(defsubst mode-line-timer--time-to-string (seconds)
   (format "%02d:%02d" (/ seconds 60) (mod seconds 60)))
 
-(defun simple-timer--propertize-mode-line ()
-  (unless (string= simple-timer--mode-line "")
-    (concat (propertize simple-timer-mode-line-sign 'face 'simple-timer-sign)
-            (propertize simple-timer--mode-line 'face 'simple-timer-timer))))
+(defun mode-line-timer--propertize-mode-line ()
+  (unless (string= mode-line-timer--mode-line "")
+    (concat (propertize mode-line-timer-mode-line-sign 'face 'mode-line-timer-sign)
+            (propertize mode-line-timer--mode-line 'face 'mode-line-timer-timer))))
 
-(defun simple-timer--set-mode-line ()
-  (setq simple-timer--mode-line
-        (simple-timer--time-to-string simple-timer--remainder-seconds)))
+(defun mode-line-timer--set-mode-line ()
+  (setq mode-line-timer--mode-line
+        (mode-line-timer--time-to-string mode-line-timer--remainder-seconds)))
 
-(defun simple-timer--tick ()
-  (let ((remainder-seconds (1- simple-timer--remainder-seconds)))
+(defun mode-line-timer--tick ()
+  (let ((remainder-seconds (1- mode-line-timer--remainder-seconds)))
     (if (< remainder-seconds 0)
-        (simple-timer-stop)
-      (decf simple-timer--remainder-seconds)
-      (simple-timer--set-mode-line)
-      (simple-timer--propertize-mode-line)
+        (mode-line-timer-stop)
+      (decf mode-line-timer--remainder-seconds)
+      (mode-line-timer--set-mode-line)
+      (mode-line-timer--propertize-mode-line)
       (force-mode-line-update))))
 
-(defsubst simple-timer--set-remainder-second (minutes)
-  (setq simple-timer--remainder-seconds (* 60 minutes)))
+(defsubst mode-line-timer--set-remainder-second (minutes)
+  (setq mode-line-timer--remainder-seconds (* 60 minutes)))
 
 ;;;###autoload
-(defun simple-timer-start (minutes)
+(defun mode-line-timer-start (minutes)
   (interactive
    (list (read-number "How long minutes >> " 25)))
-  (when simple-timer--timer
+  (when mode-line-timer--timer
     (error "Already start timer!!"))
-  (simple-timer--set-remainder-second minutes)
-  (setq simple-timer--timer (run-with-timer 0 1 'simple-timer--tick)))
+  (mode-line-timer--set-remainder-second minutes)
+  (setq mode-line-timer--timer (run-with-timer 0 1 'mode-line-timer--tick)))
 
-(defun simple-timer-stop (&optional do-reset)
+(defun mode-line-timer-stop (&optional do-reset)
   (interactive)
-  (cancel-timer simple-timer--timer)
-  (setq simple-timer--timer 'nil)
-  (setq simple-timer--mode-line "")
+  (cancel-timer mode-line-timer--timer)
+  (setq mode-line-timer--timer 'nil)
+  (setq mode-line-timer--mode-line "")
   (force-mode-line-update))
 
 ;;;###autoload
-(defun simple-timer-setup ()
+(defun mode-line-timer-setup ()
   (interactive))
 
 ;;;###autoload
-(defvar simple-timer--mode-line-initialized-p nil)
+(defvar mode-line-timer--mode-line-initialized-p nil)
 
 ;;;###autoload
-(unless simple-timer--mode-line-initialized-p
+(unless mode-line-timer--mode-line-initialized-p
   (setq-default mode-line-format
-                (cons '(:eval (simple-timer--propertize-mode-line))
+                (cons '(:eval (mode-line-timer--propertize-mode-line))
                       mode-line-format))
-  (setq simple-timer--mode-line-initialized-p t))
+  (setq mode-line-timer--mode-line-initialized-p t))
 
-(provide 'simple-timer)
+(provide 'mode-line-timer)
 
 ;; Local Variables:
 ;; coding: utf-8
 ;; indent-tabs-mode: nil
 ;; End:
 
-;;; simple-timer.el ends here
+;;; mode-line-timer.el ends here
