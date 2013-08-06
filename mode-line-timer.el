@@ -2,6 +2,7 @@
 
 ;; Author: Syohei Yoshida(syohex@gmail.com)
 ;; Version: 0.01
+;; URL: https://github.com:/syohex/emacs-mode-line-timer
 
 ;; This file is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -12,6 +13,16 @@
 ;; but WITHOUT ANY WARRANTY; without even the implied warranty of
 ;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ;; GNU General Public License for more details.
+
+;;; Commentary:
+
+;; mode-line-timer.el provides showing timer in mode-line.
+;;
+;; Start timer
+;;   M-x mode-line-timer-start
+;;
+;; Stop timer
+;;   M-x mode-line-timer-stop
 
 ;;; Code:
 
