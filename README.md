@@ -7,3 +7,14 @@ This is useful for schedule management and making instant noodle.
 ## Screenshot
 
 ![mode-line-timer](image/mode-line-timer.png)
+
+
+## Interface
+
+#### `mode-line-timer-start`
+
+Input minutes and start timer.
+
+#### `mode-line-timer-stop`
+
+Stop timer.
