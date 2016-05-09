@@ -44,7 +44,11 @@
   :type 'hook)
 
 (defface mode-line-timer-sign
-  '((t (:foreground "blue")))
+  '((((class color) (min-colors 88) (background light))
+     :foreground "blue")
+    (((class color) (background dark))
+     (:foreground "cyan"))
+    (t nil))
   "mode-line-face")
 
 (defface mode-line-timer-timer
