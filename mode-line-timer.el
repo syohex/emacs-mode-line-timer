@@ -1,6 +1,6 @@
 ;;; mode-line-timer.el --- Timer in mode-line -*- lexical-binding: t; -*-
 
-;; Author: Syohei Yoshida(syohex@gmail.com)
+;; Author: Syohei YOSHIDA(syohex@gmail.com)
 ;; Version: 0.01
 ;; URL: https://github.com:/syohex/emacs-mode-line-timer
 ;; Package-Requires: ((emacs "24.4"))
@@ -39,6 +39,10 @@
   "Sign of timer"
   :type 'string)
 
+(defcustom mode-line-expire-hook nil
+  "Hook run after timer expired."
+  :type 'hook)
+
 (defface mode-line-timer-sign
   '((t (:foreground "blue")))
   "mode-line-face")
@@ -69,7 +73,9 @@
 (defun mode-line-timer--tick ()
   (let ((remainder-seconds (1- mode-line-timer--remainder-seconds)))
     (if (< remainder-seconds 0)
-        (mode-line-timer-stop)
+        (progn
+          (mode-line-timer-stop)
+          (run-hooks 'mode-line-expire-hook))
       (cl-decf mode-line-timer--remainder-seconds)
       (mode-line-timer--set-mode-line)
       (mode-line-timer--propertize-mode-line)
