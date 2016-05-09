@@ -55,9 +55,6 @@
 (defvar mode-line-timer--remainder-seconds 0)
 (defvar mode-line-timer--mode-line "")
 
-(defmacro mode-line-timer--reset-remainder-time (time)
-  `(setq simpler-timer--remainder-seconds (* ,time 60)))
-
 (defsubst mode-line-timer--time-to-string (seconds)
   (format "%02d:%02d" (/ seconds 60) (mod seconds 60)))
 
