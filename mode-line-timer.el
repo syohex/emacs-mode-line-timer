@@ -94,18 +94,10 @@
         mode-line-timer--mode-line "")
   (force-mode-line-update))
 
-;;;###autoload
-(defun mode-line-timer-setup ()
-  (interactive)
-  "Dummy function for lazy loading")
-
-(defvar mode-line-timer--mode-line-initialized-p nil)
-
-(unless mode-line-timer--mode-line-initialized-p
+(unless (member '(:eval (mode-line-timer--propertize-mode-line)) mode-line-format)
   (setq-default mode-line-format
                 (cons '(:eval (mode-line-timer--propertize-mode-line))
-                      mode-line-format))
-  (setq mode-line-timer--mode-line-initialized-p t))
+                      mode-line-format)))
 
 (provide 'mode-line-timer)
 
