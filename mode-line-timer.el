@@ -86,11 +86,12 @@
   (setq mode-line-timer--remainder-seconds (* 60 minutes)))
 
 ;;;###autoload
-(defun mode-line-timer-start (minutes)
-  (interactive
-   (list (read-number "How long minutes " 25)))
+(defun mode-line-timer-start (&optional minutes)
+  (interactive)
   (when mode-line-timer--timer
     (error "Already start timer!!"))
+  (unless minutes
+    (setq minutes (read-number "How long minutes " 25)))
   (mode-line-timer--set-remainder-second minutes)
   (setq mode-line-timer--timer (run-with-timer 0 1 'mode-line-timer--tick)))
 
