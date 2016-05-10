@@ -102,6 +102,11 @@
         mode-line-timer--mode-line "")
   (force-mode-line-update))
 
+(defun mode-line-timer-done ()
+  (interactive)
+  (mode-line-timer-stop)
+  (run-hooks 'mode-line-expire-hook))
+
 (unless (member '(:eval (mode-line-timer--propertize-mode-line)) mode-line-format)
   (setq-default mode-line-format
                 (cons '(:eval (mode-line-timer--propertize-mode-line))

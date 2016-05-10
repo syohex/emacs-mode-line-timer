@@ -19,6 +19,10 @@ Input minutes and start timer.
 
 Stop timer.
 
+#### `mode-line-timer-done`
+
+Same as `mode-line-timer-stop` except running hook(`mode-line-expire-hook`).
+
 ## Customization
 
 #### `mode-line-expire-hook`
